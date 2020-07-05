@@ -1,0 +1,15 @@
+﻿@model List<Smart.Core.Domain.Product>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<table>
+    @foreach (var product in Model)
+    {
+        <tr>
+            <td>@product.Name</td>
+        </tr>
+    }
+</table>
+

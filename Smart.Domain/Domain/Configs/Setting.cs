@@ -1,28 +1,19 @@
 ﻿using Smart.Core.Domain.Enums;
+using Smart.Domain.Entity;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
-namespace Smart.Core.Domain.Configs
+namespace Smart.Core.Domain
 {
     [Table("Settings")]
-    public class Setting
+    public class Setting : ParentEntity<string>
     {
-        [Key]
         [Required]
-        [StringLength(128)]
-        [Column(TypeName = "VARCHAR")]
-        public string Id { get; set; }
-
-        [Required]
-        [Column(TypeName = "VARCHAR")]
         [StringLength(128)]
         public string CustomerId {get;set;}
 
         [Required]
-        [Column(TypeName = "VARCHAR")]
         [StringLength(128)]
         public string ObjectId {get;set;}
 

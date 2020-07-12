@@ -1,24 +1,15 @@
-﻿using Smart.Core.Domain.Enums;
-using System;
-using System.Collections.Generic;
+﻿using Smart.Core.Enums;
+using Smart.Domain.Entity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
-namespace Smart.Core.Domain.Categories
+namespace Smart.Core.Domain
 {
-
     [Table("Categories")]
-    public class Category
+    public class Category : ParentEntity<string>
     {
-        [Key]
         [Required]
-        [StringLength(128)]
-        [Column(TypeName = "VARCHAR")]
-        public string Id { get; set; }
-
-        [Required]
-        [MaxLength(250)]
+        [StringLength(250)]
         public string Name { get; set; }
 
         public CategoryType Type { get; set; }

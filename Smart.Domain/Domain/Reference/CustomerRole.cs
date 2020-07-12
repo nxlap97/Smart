@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Smart.Core.Domain.Reference
+namespace Smart.Core.Domain
 {
     [Table("CustomerRoles")]
     public class CustomerRole
@@ -12,17 +12,17 @@ namespace Smart.Core.Domain.Reference
         [Key]
         [Required]
         [StringLength(128)]
-        [Column(TypeName = "VARCHAR")]
+        
         public string Id { get; set; }
 
         [Required]
         [StringLength(128)]
-        [Column(TypeName = "VARCHAR")]
+        
         public string RoleId { get; set; }
 
         [Required]
         [StringLength(128)]
-        [Column(TypeName = "VARCHAR")]
+        
         public string CustomerId { get; set; }
 
 

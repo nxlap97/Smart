@@ -1,15 +1,469 @@
-﻿@model List<Smart.Core.Domain.Product>
+﻿@model List<Product>
 @{
-    ViewData["Title"] = "Index";
+    ViewBag.Title = "Trang Chủ";
 }
 
-<h1>Index</h1>
-<table>
-    @foreach (var product in Model)
-    {
-        <tr>
-            <td>@product.Name</td>
-        </tr>
-    }
-</table>
+<section>
+    <div class="container">
+
+        <div class="row">
+            <div class="col text-center">
+                <div class="sec-heading mx-auto">
+                    <h2>What We Do?</h2>
+                    <p>Virasat is creating a new era for Html Templates, you will never be able to get the same quality with any other Design.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-4 mb-4">
+                <div class="features-grid text-center" data-aos="fade-down" data-aos-duration="1200">
+                    <div class="features-grid-item">
+                        <span class="step">01</span>
+                        <div class="features-grid-icon icon-center"><i class="ti-desktop"></i></div>
+                        <div class="features-grid-content">
+                            <h4>Market research</h4>
+                            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum .</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-4 mb-4">
+                <div class="features-grid text-center" data-aos="fade-up" data-aos-duration="1200">
+                    <div class="features-grid-item">
+                        <span class="step">02</span>
+                        <div class="features-grid-icon icon-center"><i class="ti-pencil-alt"></i></div>
+                        <div class="features-grid-content">
+                            <h4>Keyword targeting</h4>
+                            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum .</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-4 mb-4">
+                <div class="features-grid text-center" data-aos="fade-down" data-aos-duration="1200">
+                    <div class="features-grid-item">
+                        <span class="step">03</span>
+                        <div class="features-grid-icon icon-center"><i class="ti-email"></i></div>
+                        <div class="features-grid-content">
+                            <h4>Email Marketing</h4>
+                            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum .</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+<div class="clearfix"></div>
+
+<section class="image-bg" style="background:#0f7dff url(client-site/img/banner-55.png) no-repeat;">
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <div class="sec-heading light mx-auto">
+                    <h2>What We Do?</h2>
+                    <p>Virasat is creating a new era for Html Templates, you will never be able to get the same quality with any other Design.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center seo-contact mb-4">
+            <div class="col-lg-3 col-md-4 col-sm-12 p-0">
+                <div class="form-row">
+                    <input type="url" class="form-control" placeholder="Your Website URL">
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-12">
+                <div class="form-row">
+                    <input type="email" class="form-control" placeholder="Email address">
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-12 p-0">
+                <div class="form-row">
+                    <button type="submit" class="btn-lg btn btn-warning">GET YOUR REPORT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="clearfix"></div>
+
+<section>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-6 col-md-6">
+                <img src="client-site/img/ilustratia.png" class="img-responsive" alt="">
+            </div>
+
+            <div class="col-lg-6 col-md-6">
+                <div class="row">
+
+                    <div class="col-lg-6 col-md-6">
+                        <div class="small-features-box-colors mb-4" data-aos="fade-down" data-aos-duration="1200">
+                            <div class="sfb-icon bg-light-success text-success">
+                                <i class="ti-layers-alt"></i>
+                            </div>
+                            <h4 class="sfb-title">CPA Marketing</h4>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6">
+                        <div class="small-features-box-colors mb-4" data-aos="fade-down" data-aos-duration="1200">
+                            <div class="sfb-icon bg-light-warning text-warning">
+                                <i class="ti-pencil-alt"></i>
+                            </div>
+                            <h4 class="sfb-title">Reputation Recover</h4>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6">
+                        <div class="small-features-box-colors mb-4" data-aos="fade-up" data-aos-duration="1200">
+                            <div class="sfb-icon bg-light-danger text-danger">
+                                <i class="ti-cloud-down"></i>
+                            </div>
+                            <h4 class="sfb-title">Keyword Research</h4>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6">
+                        <div class="small-features-box-colors mb-4" data-aos="fade-up" data-aos-duration="1200">
+                            <div class="sfb-icon bg-light-info text-info">
+                                <i class="ti-write"></i>
+                            </div>
+                            <h4 class="sfb-title">Local Search Strategy</h4>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="clearfix"></div>
+<!-- ============================ Advance Features End ================================== -->
+<!-- ============================ Our Prices Start ================================== -->
+<section class="gray">
+    <div class="container">
+
+        <div class="row">
+            <div class="col text-center">
+                <div class="sec-heading mx-auto">
+                    <h2>Our Best Pricing Plan</h2>
+                    <p>For startups and growing businesses check virasat plan and package, an online specialist can develop a digital marketing plan to help you grow your business & happy client base.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-4">
+                <div class="pricing-box pricing-1 mb-4" data-aos="fade-up" data-aos-duration="1200">
+                    <div class="pricing-header">
+                        <div class="package-type">
+                            <p>Basic</p>
+                        </div>
+                        <div class="package-price">
+                            <h2><sup>$</sup>70<sub>/Month</sub></h2>
+                        </div>
+                    </div>
+                    <div class="pricing-content">
+                        <ul>
+                            <li><span>10 Video Upload</span></li>
+                            <li><span>2 Messages</span></li>
+                            <li><span>5 Contact</span></li>
+                            <li><span>3 GB Data</span></li>
+                            <li class="disable"><span>Unlimited Time</span></li>
+                            <li class="disable"><span>Trial 14 Days</span></li>
+                        </ul>
+                    </div>
+                    <div class="buy-now">
+                        <a href="#" class="buy-btn">Get Started</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-4">
+                <div class="pricing-box pricing-1 featured-price mb-4" data-aos="fade-down" data-aos-duration="1200">
+                    <div class="pricing-header">
+                        <div class="package-type">
+                            <p>Standard</p>
+                        </div>
+                        <div class="package-price">
+                            <h2><sup>$</sup>149<sub>/Month</sub></h2>
+                        </div>
+                    </div>
+                    <div class="pricing-content">
+                        <ul>
+                            <li><span>20 Video Upload</span></li>
+                            <li><span>4 Messages</span></li>
+                            <li><span>10 Contact</span></li>
+                            <li><span>10 GB Data</span></li>
+                            <li><span>Unlimited Time</span></li>
+                            <li class="disable"><span>Trial 14 Days</span></li>
+                        </ul>
+                    </div>
+                    <div class="buy-now">
+                        <a href="#" class="buy-btn">Get Started</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-4">
+                <div class="pricing-box pricing-1 mb-4" data-aos="fade-up" data-aos-duration="1200">
+                    <div class="pricing-header">
+                        <div class="package-type">
+                            <p>Ultimate</p>
+                        </div>
+                        <div class="package-price">
+                            <h2><sup>$</sup>199<sub>/Month</sub></h2>
+                        </div>
+                    </div>
+                    <div class="pricing-content">
+                        <ul>
+                            <li><span>50 Video Upload</span></li>
+                            <li><span>20 Messages</span></li>
+                            <li><span>20 Contact</span></li>
+                            <li><span>30 GB Data</span></li>
+                            <li><span>Unlimited Time</span></li>
+                            <li><span>Trial 14 Days</span></li>
+                        </ul>
+                    </div>
+                    <div class="buy-now">
+                        <a href="#" class="buy-btn">Get Started</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<div class="clearfix"></div>
+<!-- ============================ Our Prices End ================================== -->
+<!-- ============================ Service list Start ================================== -->
+<section>
+    <div class="container">
+
+        <div class="row">
+            <div class="col text-center">
+                <div class="sec-heading mx-auto">
+                    <h2>Affordable SEO services</h2>
+                    <p>Virasat is creating a new era for Html Templates, Join us and get ultimate offers & benifits with best support.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="features-list" data-aos="fade-up" data-aos-duration="1200">
+                    <div class="features-list-item">
+                        <div class="features-list-icon"><img src="client-site/img/market-analysiss.png" alt=""></div>
+                        <div class="features-list-content">
+                            <h4>Market Analysis</h4>
+                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="features-list" data-aos="fade-up" data-aos-duration="1200">
+                    <div class="features-list-item">
+                        <div class="features-list-icon"><img src="client-site/img/email-marketing.png" alt=""></div>
+                        <div class="features-list-content">
+                            <h4>Email Marketing</h4>
+                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="features-list" data-aos="fade-up" data-aos-duration="1200">
+                    <div class="features-list-item">
+                        <div class="features-list-icon"><img src="client-site/img/off-page.png" alt=""></div>
+                        <div class="features-list-content">
+                            <h4>Off Page SEO</h4>
+                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="features-list" data-aos="fade-up" data-aos-duration="1200">
+                    <div class="features-list-item">
+                        <div class="features-list-icon"><img src="client-site/img/keyword.png" alt=""></div>
+                        <div class="features-list-content">
+                            <h4>Keyword Analysis</h4>
+                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="features-list" data-aos="fade-up" data-aos-duration="1200">
+                    <div class="features-list-item">
+                        <div class="features-list-icon"><img src="client-site/img/article.png" alt=""></div>
+                        <div class="features-list-content">
+                            <h4>Content Marketing</h4>
+                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="features-list" data-aos="fade-up" data-aos-duration="1200">
+                    <div class="features-list-item">
+                        <div class="features-list-icon"><img src="client-site/img/on-page.png" alt=""></div>
+                        <div class="features-list-content">
+                            <h4>On Page SEO</h4>
+                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<div class="clearfix"></div>
+<!-- ============================ Service list End ================================== -->
+<!-- ============================ Our Testimonial Start ================================== -->
+<section class="gray">
+    <div class="container">
+
+        <div class="row">
+            <div class="col text-center">
+                <div class="sec-heading mx-auto">
+                    <h2>What People Say's</h2>
+                    <p>For startups and growing businesses check virasat plan and package, an online specialist can develop a digital marketing plan to help you grow your business & happy client base.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="owl-carousel" id="testimonials">
+
+                <!-- Single Testimonials -->
+                <div class="item">
+                    <div class="testimonial-box">
+                        <i class="fa fa-quote-left"></i>
+                        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi dignissimos ducimus qui blanditiis praesentium voluptatum deleniti.</p>
+
+                        <div class="client-thumb-box">
+                            <div class="client-thumb-content">
+                                <div class="client-thumb">
+                                    <img src="client-site/img/team-img-1.png" class="img-responsive img-circle" alt="">
+                                </div>
+                                <h5 class="mb-0">Adam Gillworm</h5>
+                                <span class="small-font">Founder Of Apple</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Testimonials -->
+                <div class="item">
+                    <div class="testimonial-box">
+                        <i class="fa fa-quote-left"></i>
+                        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi dignissimos ducimus qui blanditiis praesentium voluptatum deleniti.</p>
+
+                        <div class="client-thumb-box">
+                            <div class="client-thumb-content">
+                                <div class="client-thumb">
+                                    <img src="client-site/img/team-img-2.png" class="img-responsive img-circle" alt="">
+                                </div>
+                                <h5 class="mb-0">Lilly Wilgorm</h5>
+                                <span class="small-font">Founder Of Aziro Soft</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Testimonials -->
+                <div class="item">
+                    <div class="testimonial-box">
+                        <i class="fa fa-quote-left"></i>
+                        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi dignissimos ducimus qui blanditiis praesentium voluptatum deleniti.</p>
+
+                        <div class="client-thumb-box">
+                            <div class="client-thumb-content">
+                                <div class="client-thumb">
+                                    <img src="client-site/img/team-img-3.png" class="img-responsive img-circle" alt="">
+                                </div>
+                                <h5 class="mb-0">Rush Willium</h5>
+                                <span class="small-font">App Developer</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Testimonials -->
+                <div class="item">
+                    <div class="testimonial-box">
+                        <i class="fa fa-quote-left"></i>
+                        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi dignissimos ducimus qui blanditiis praesentium voluptatum deleniti.</p>
+
+                        <div class="client-thumb-box">
+                            <div class="client-thumb-content">
+                                <div class="client-thumb">
+                                    <img src="client-site/img/team-img-4.png" class="img-responsive img-circle" alt="">
+                                </div>
+                                <h5 class="mb-0">Shikha Rawat</h5>
+                                <span class="small-font">Founder Of Alizo</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Testimonials -->
+                <div class="item">
+                    <div class="testimonial-box">
+                        <i class="fa fa-quote-left"></i>
+                        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi dignissimos ducimus qui blanditiis praesentium voluptatum deleniti.</p>
+
+                        <div class="client-thumb-box">
+                            <div class="client-thumb-content">
+                                <div class="client-thumb">
+                                    <img src="client-site/img/team-img-5.png" class="img-responsive img-circle" alt="">
+                                </div>
+                                <h5 class="mb-0">Adam Wilsdom</h5>
+                                <span class="small-font">Web Designer</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Testimonials -->
+                <div class="item">
+                    <div class="testimonial-box">
+                        <i class="fa fa-quote-left"></i>
+                        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi dignissimos ducimus qui blanditiis praesentium voluptatum deleniti.</p>
+
+                        <div class="client-thumb-box">
+                            <div class="client-thumb-content">
+                                <div class="client-thumb">
+                                    <img src="client-site/img/team-img-6.png" class="img-responsive img-circle" alt="">
+                                </div>
+                                <h5 class="mb-0">Adam Gillworm</h5>
+                                <span class="small-font">Founder Of Apple</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+<div class="clearfix"></div>
 

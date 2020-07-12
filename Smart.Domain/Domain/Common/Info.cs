@@ -1,16 +1,14 @@
 ﻿using Smart.Domain.Entity;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Smart.Core.Domain
 {
     [Table("Infos")]
     public class Info : ParentEntity<string>
     {
-
+        [StringLength(128)]
         [Required]
         public string ObjectId { get; set; }
 

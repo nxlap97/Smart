@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Smart.Core.Domain.Enums
+namespace Smart.Core.Enums
 {
     public enum CategoryType
     {

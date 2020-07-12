@@ -1,5 +1,4 @@
 ﻿using Smart.Core.Domain;
-using Smart.Core.Domain.Common;
 using Smart.Data.Infrastructor;
 using Smart.Service.Interfaces;
 using System;

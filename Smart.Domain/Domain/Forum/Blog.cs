@@ -1,24 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Smart.Domain.Entity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
-namespace Smart.Core.Domain.Forum
+namespace Smart.Core.Domain
 {
     [Table("Blogs")]
-    public class Blog
+    public class Blog : ParentEntity<string>
     {
-        [Key]
-        [Required]
-        [StringLength(128)]
-        [Column(TypeName = "VARCHAR")]
-        public string Id { get; set; }
-
         [StringLength(250)]
         [Required]
         public string Name { get; set; }
-
 
         public string Description { get; set; }
 

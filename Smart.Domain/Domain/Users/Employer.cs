@@ -1,30 +1,20 @@
-﻿
+﻿using Smart.Domain.Entity;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
-namespace Smart.Core.Domain.Users
+namespace Smart.Core.Domain
 {
     [Table("Employers")]
-    public class Employer
+    public class Employer :  ParentEntity<string>
     {
-        [Key]
-        [Required]
-        [StringLength(128)]
-        [Column(TypeName = "VARCHAR")]
-        public string Id { get; set; }
-
         [StringLength(100)]
         public string FullName { get; set; }
 
         [StringLength(50)]
-        [Column(TypeName = "VARCHAR")]
         public string Email { get; set; }
 
         [StringLength(50)]
-        [Column(TypeName = "VARCHAR")]
         public string Phone { get; set; }
 
         public DateTime  BirthDay { get; set; }
@@ -32,7 +22,6 @@ namespace Smart.Core.Domain.Users
         public string  Address { get; set; }
 
         [StringLength(50)]
-        [Column(TypeName = "VARCHAR")]
         public string  IdentityCard { get; set; }
     }
 }

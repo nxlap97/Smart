@@ -1,28 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Smart.Domain.Entity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
-namespace Smart.Core.Domain.Common
+namespace Smart.Core.Domain
 {
     [Table("AttachFiles")]
-    public class AttachFile
+    public class AttachFile :  ParentEntity<string>
     {
-        [Key]
         [Required]
-        [StringLength(128)]
-        [Column(TypeName = "VARCHAR")]
-        public string Id { get; set; }
-
-        [Required]
-        [StringLength(128)]
-        [Column(TypeName = "VARCHAR")]
+        [StringLength(128)]   
         public string ObjectId { get; set; }
 
         [Required]
-        [StringLength(128)]
-        [Column(TypeName = "VARCHAR")]
+        [StringLength(128)] 
         public string DocId { get; set; }
     }
 }

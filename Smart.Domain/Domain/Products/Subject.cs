@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using Smart.Domain.Entity;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
-namespace Smart.Core.Domain.Products
+namespace Smart.Core.Domain
 {
     [Table("Subjects")]
-    public class Subject
+    public class Subject : ParentEntity<string>
     {
-        [Key]
-        [Required]
-        [StringLength(128)]
-        [Column(TypeName = "VARCHAR")]
-        public string Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
     }

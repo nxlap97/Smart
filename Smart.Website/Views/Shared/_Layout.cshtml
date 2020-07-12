@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>@ViewBag.Title</title>
+
+    <partial name="_Css.cshtml" />
+</head>
+
+<body>
+    <div class="preloader" style="display: none;">
+        <div class="loader">
+            <div class="loader__figure"></div>
+            <p class="loader__label">Virasat</p>
+        </div>
+    </div>
+
+    <div id="main-wrapper">
+        @await Component.InvokeAsync("Header")
+        <div class="clearfix"></div>
+
+        @await Component.InvokeAsync("Banner")
+        <div class="clearfix"></div>
+
+        @RenderBody()
+
+        @await Component.InvokeAsync("Newsletters")
+        <div class="clearfix"></div>
+        @await Component.InvokeAsync("Footer")
+
+        <partial name="_Modal.cshtml" />
+    </div>
+
+    <partial name="_Scripts.cshtml" />
+
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>
+

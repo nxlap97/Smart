@@ -1,24 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Smart.Domain.Entity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
-namespace Smart.Core.Domain.Log
+namespace Smart.Core.Domain
 {
     [Table("Loggings")]
-    public class Logging
+    public class Logging : ParentEntity<string>
     {
-        [Key]
-        [Required]
-        [StringLength(128)]
-        [Column(TypeName = "VARCHAR")]
-        public string Id { get; set; }
-
         public string Error { get; set; }
 
-        [StringLength(50)]
-        [Column(TypeName = "VARCHAR")]
+        [StringLength(128)]
         public string Entity { get; set; }
     }
 }

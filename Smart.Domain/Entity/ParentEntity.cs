@@ -6,7 +6,7 @@ namespace Smart.Domain.Entity
     {
         public ParentEntity()
         {
-            var type = Id.GetType();
+            //var type = Id.GetType();
 
         }
 

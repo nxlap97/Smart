@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <Folder Include="Infrastructor\ValidationAttributeAdapterProvider\" />
-    <Folder Include="wwwroot\admin-site\" />
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
 

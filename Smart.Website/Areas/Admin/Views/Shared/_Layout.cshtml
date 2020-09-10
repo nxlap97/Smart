@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SEO DESCRIPTION">
+    <meta name="keywords" content="Seo keyword">
+    <meta name="author" content="NGUYỄN XUÂN LẬP">
+    <link rel="icon" href="~/admin-site/images/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="~/admin-site/images/favicon.png" type="image/x-icon">
+    <title>@ViewBag.Title</title>
+
+    <partial name="_Css.cshtml" />
+</head>
+<body onload="@ViewData["BodyCss"]">
+    <div class="tap-top"><i data-feather="chevrons-up"></i></div>
+    <div class="page-wrapper compact-wrapper" id="pageWrapper">
+        @await Component.InvokeAsync("HeaderAdmin")
+        <div class="page-body-wrapper sidebar-icon">
+            <header class="main-nav">
+                <div class="logo-wrapper">
+                    <a href="index.html"><img class="img-fluid for-light" src="~/admin-site/images/logo/logo.png" alt=""><img class="img-fluid for-dark" src="~/admin-site/images/logo/logo_dark.png" alt=""></a>
+                    <div class="back-btn"><i class="fa fa-angle-left"></i></div>
+                    <div class="toggle-sidebar"><i class="status_toggle middle" data-feather="grid" id="sidebar-toggle"> </i></div>
+                </div>
+                <div class="logo-icon-wrapper">
+                    <a href="index.html">
+                        <img class="img-fluid" src="~/admin-site/images/logo/logo-icon.png" alt="">
+                    </a>
+                </div>
+                @await Component.InvokeAsync("NavigaBarAdmin")
+            </header>
+            @RenderBody()
+            @await Component.InvokeAsync("FooterAdmin")
+        </div>
+    </div>
+    <partial name="_Scripts.cshtml" />
+
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>

@@ -37,17 +37,6 @@ namespace Smart.Website.Infrastructor.Schedules
         private void DoWork(object state)
         {
             _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-
-
-
-            //using (_telemetryClient.StartOperation<RequestTelemetry>("operation"))
-            //{
-            //    _logger.LogWarning("A sample warning message. By default, logs with severity Warning or higher is captured by Application Insights");
-            //    _logger.LogInformation("Calling bing.com");
-            //    var res = httpClient.GetAsync("https://bing.com").GetAwaiter().GetResult();
-            //    _logger.LogInformation("Calling bing completed with status:" + res.StatusCode);
-            //    _telemetryClient.TrackEvent("Bing call event completed");
-            //}
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

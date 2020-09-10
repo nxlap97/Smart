@@ -14,6 +14,7 @@ namespace Smart.Core.Domain
 
         public string CreatedBy { get; set; }
 
+        [StringLength(128)]
         public string UpdatedBy { get; set; }
 
         public string DeletedBy { get; set; }

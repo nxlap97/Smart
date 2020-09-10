@@ -20,42 +20,7 @@ namespace Smart.Website
 
         public static void Main(string[] args)
         {
-            //MainAsync(args);
             CreateWebHostBuilder(args).Build().Run();
-        }
-
-        public static async Task MainAsync(string[] args)
-        {
-            //var host = new HostBuilder()
-            // .ConfigureAppConfiguration((hostContext, config) =>
-            // {
-            //     config.AddJsonFile("appsettings.json", optional: true);
-            // })
-            // .ConfigureServices((hostContext, services) =>
-            // {
-            //     services.AddLogging();
-            //     services.AddHostedService<TimedHostedService>();
-
-            //    // instrumentation key is read automatically from appsettings.json
-            //    services.AddApplicationInsightsTelemetryWorkerService();
-
-
-            // })
-            // .UseConsoleLifetime()
-            // .Build();
-
-            //using (host)
-            //{
-            //    new Thread(() =>
-            //    {
-            //        host.StartAsync();
-            //        //host.WaitForShutdownAsync();
-            //    });
-            //}
-
-            //CreateWebHostBuilder(args).Build().Run();
-
-            
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
@@ -63,8 +28,8 @@ namespace Smart.Website
                 .UseStartup<Startup>()
              .ConfigureServices((hostContext, services) =>
              {
-                 services.AddSingleton<DesignTimeDbContextFactory>(new DesignTimeDbContextFactory());
-                 services.AddHostedService<Worker>();
+                 services.AddSingleton<DesignTimeDbContextFactory>(new DesignTimeDbContextFactory()); /*- Giúp lấy dữ liệu từ dbContext*/
+                 services.AddHostedService<Worker>();  /* Khởi tạo và chạy vào luôn */
                  services.AddApplicationInsightsTelemetryWorkerService();
              });
                

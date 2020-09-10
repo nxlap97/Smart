@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Đăng nhập";
+}
+
+<style>
+    #frmLogin {
+        width: 100%;
+    }
+    .height-10px {
+        height:10px;
+    }
+    .margin-left-50-percent{
+        margin-left: 50%;
+    }
+</style>
+
+<div class="clearfix"></div>
+
+<section>
+
+    <div class="container">
+        <div class="margin-bottom-100px"></div>
+        <div class="row">
+            <form id="frmLogin" action="/Customer/Login" method="post">
+                <div class="row">
+                    <div class="col-md-3">
+                        <span>Tài khoản: </span>
+                    </div>
+                    <div class="col-md-9">
+                        <input name="UserName" type="text" class="form-control height-40px border-radius-7px-0-0-7px" />
+                    </div>
+                </div>
+                <div class="height-10px"></div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <span>Mật khẩu: </span>
+                    </div>
+                    <div class="col-md-9">
+                        <input name="Password" type="password" class="form-control height-40px border-radius-7px-0-0-7px" />
+                    </div>
+                </div>
+                <div class="height-10px"></div>
+                <div class="row text-align-center margin-left-50-percent">
+                    <button type="submit" class="btn btn-primary height-40px border-radius-7px-7px-7px-7px">Đăng nhập</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<div class="clearfix"></div>
+

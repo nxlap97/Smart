@@ -8,4 +8,10 @@
     <Folder Include="Domain\UI\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Microsoft.Extensions.DependencyInjection">
+      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.extensions.dependencyinjection\2.2.0\lib\netcoreapp2.0\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

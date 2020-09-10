@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -11,8 +12,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Smart.Data;
 using Smart.Data.Infrastructor;
-using Smart.Service.EF.Products;
+using Smart.Service.EF;
 using Smart.Service.Interfaces;
+using Smart.Website.Infrastructor.SignalR_Message;
 
 namespace Smart.Website
 {
@@ -35,6 +37,7 @@ namespace Smart.Website
             //services.AddTransient(typeof(IUnitOfWork), typeof(EFUnitOfWork));
             services.AddTransient(typeof(IRepository<,>), typeof(Repository<,>));
             services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<ICustomerService, CustomerService>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -42,15 +45,77 @@ namespace Smart.Website
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
-
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(600);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+            ConfigAuthCustomer(services);
+            ConfigureSignalR(services);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
         }
 
+        public void ConfigAuthCustomer(IServiceCollection services)
+        {
+            services.AddAuthentication("SmartSecurityScheme")
+            .AddCookie("SmartSecurityScheme", options =>
+            {
+                options.AccessDeniedPath = new PathString("/dang-nhap.html");
+                // access
+                options.Cookie = new CookieBuilder
+                {
+                    //Domain = "",
+                    HttpOnly = true,
+                    Name = ".aspNetCore.Security.Cookie",
+                    Path = "/",
+                    SameSite = SameSiteMode.Lax,
+                    SecurePolicy = CookieSecurePolicy.SameAsRequest
+                };
+                options.Events = new CookieAuthenticationEvents
+                {
+                    OnSignedIn = context =>
+                    {
+                        Console.WriteLine("{0} - {1}: {2}", DateTime.Now,
+                            "OnSignedIn", context.Principal.Identity.Name);
+                        return Task.CompletedTask;
+                    },
+                    OnSigningOut = context =>
+                    {
+                        Console.WriteLine("{0} - {1}: {2}", DateTime.Now,
+                            "OnSigningOut", context.HttpContext.User.Identity.Name);
+                        return Task.CompletedTask;
+                    },
+                    OnValidatePrincipal = context =>
+                    {
+                        Console.WriteLine("{0} - {1}: {2}", DateTime.Now,
+                            "OnValidatePrincipal", context.Principal.Identity.Name);
+                        return Task.CompletedTask;
+                    }
+                };
+                //options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+                options.LoginPath = new PathString("/dang-nhap.html");
+                options.ReturnUrlParameter = "RequestPath";
+                options.SlidingExpiration = true;
+            });
+        }
+
+        public void ConfigureSignalR(IServiceCollection services)
+        {
+            services.AddCors(options => options.AddPolicy("CorsPolicy",
+               builder =>
+               {
+                   builder.AllowAnyMethod()
+                       .AllowAnyHeader()
+                       .WithOrigins("http://localhost:3000")
+                       .AllowCredentials();
+               }));
+            services.AddSignalR();
+        }
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -64,6 +129,16 @@ namespace Smart.Website
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseAuthentication();
+            app.UseCors(x => x
+               .AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader());
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<SmartHub>("/SmartHub");
+            });
 
             app.UseMvc(routes =>
             {
@@ -73,8 +148,6 @@ namespace Smart.Website
 
                 routes.MapRoute(name: "areaRoute",
                     template: "{area:exists}/{controller=Login}/{action=Index}/{id?}");
-
-
             });
         }
     }

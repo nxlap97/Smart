@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Smart.Website.Infrastructor.Schedules
+namespace Smart.Domain.DI
 {
     public class ServiceLocator
     {
@@ -34,9 +34,9 @@ namespace Smart.Website.Infrastructor.Schedules
             return _currentServiceProvider.GetService(serviceType);
         }
 
-        public TService GetInstance<TService>()
-        {
-            return _currentServiceProvider.GetService<TService>();
-        }
+        //public TService GetInstance<TService>()
+        //{
+        //    return _currentServiceProvider.GetService<TService>();
+        //}
     }
 }

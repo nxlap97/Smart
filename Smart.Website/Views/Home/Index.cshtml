@@ -3,6 +3,9 @@
     ViewBag.Title = "Trang Chủ";
 }
 
+@await Component.InvokeAsync("Banner")
+<div class="clearfix"></div>
+
 <section>
     <div class="container">
 
@@ -466,4 +469,5 @@
     </div>
 </section>
 <div class="clearfix"></div>
-
+@await Component.InvokeAsync("Newsletters")
+<div class="clearfix"></div>

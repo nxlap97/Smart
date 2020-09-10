@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Smart.Data;
 using Smart.Data.Infrastructor;
-using Smart.Service.EF.Products;
+using Smart.Service.EF;
 using Smart.Service.Interfaces;
 using Smart.Utility.StringHelper;
 using Swashbuckle.AspNetCore.Swagger;

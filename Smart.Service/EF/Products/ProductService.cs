@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Smart.Service.EF.Products
+namespace Smart.Service.EF
 {
     public class ProductService : IProductService
     {

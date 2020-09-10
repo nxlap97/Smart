@@ -1,0 +1,35 @@
+﻿.margin-bottom-100px{
+    margin-bottom: 100px;
+}
+
+.margin-top-100px {
+    margin-top: 100px;
+}
+
+.margin-bottom-50px {
+    margin-bottom: 50px;
+}
+
+.margin-top-50px {
+    margin-top: 50px;
+}
+
+.height-20px{
+    height: 20px;
+}
+
+.height-40px {
+    height: 40px;
+}
+
+.border-radius-7px-0-0-7px {
+    border-radius: 7px 0 0 7px;
+}
+
+.border-radius-7px-7px-7px-7px {
+    border-radius: 7px 7px 7px 7px;
+}
+
+.text-align-center{
+    text-align:center;
+}

@@ -1,4 +1,41 @@
-﻿<div class="page-body">
+﻿@model PermisionModel
+@{ 
+    ViewBag.Title = "Permision";
+}
+
+@section Css{ 
+    <style>
+        tr, td, th {
+            border: 1px solid black !important;
+        }
+
+        th {
+            font-weight: bold !important;
+            text-align:center;
+        }
+
+            tr.controller {
+                cursor: pointer;
+                color:  black;
+                font-weight: bold;
+            }
+
+        .text-align-center{
+            text-align:center;
+        }
+
+        label input.check-role {
+            width: 20px !important;
+            height: 20px !important;
+        }
+
+        .check-all-role {
+            cursor: pointer;
+        }
+
+    </style>
+}
+<div class="page-body">
     <div class="container-fluid">
         <div class="page-header">
             <div class="row">
@@ -49,32 +86,79 @@
     </div>
     <div class="container-fluid">
         <div class="col-md-12">
-            <table class="table table-bordered">
+            <table class="table">
                 <thead>
                     <tr>
-                        <th>STT</th>
-                        <th>Name</th>
-                        <th>CreatedDate</th>
-                        <th>Status</th>
-                        <th>#</th>
+                        @*<th width="5%"> </th>*@
+                        <th colspan="2">Name</th>
+                        @foreach (var role in Model.RoleList)
+                        {
+                            <th class="check-all-role">@role.Name</th>
+                        }
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Shirt</td>
-                        <td>19-09-2020</td>
-                        <td><span class="text-danger">Active</span></td>
-                        <td>
-                            <a class="btn btn-primary btn-text-color-white"><i class="fa fa-edit"></i></a>
-                            <a class="btn btn-danger btn-text-color-white"><i class="fa fa-trash"></i></a>
-                        </td>
+                    @foreach (var controller in Model.ControllerList)
+                    {
+                        var indexOf = Model.ControllerList.IndexOf(controller) + 1;
+
+                    <tr class="controller">
+                        <td colspan="2" class="controller-toggle" data-id="@controller.Name">@controller.Name</td>
+                        @foreach (var role in Model.RoleList)
+                        {
+                            <td class="text-align-center">
+                                <label><input class="check-role" type="checkbox" value="@role.Value"></label>
+                            </td>
+                        }
                     </tr>
+                        foreach (var action in controller.ActionList)
+                        {
+                            var index = controller.ActionList.IndexOf(action) + 1;
+                            <tr class="controller-@controller.Name">
+                                <td width="2%">@index .</td>
+                                <td>@action.Name</td>
+                                @foreach (var role in Model.RoleList)
+                                {
+                                    <td class="text-align-center">
+                                        <label><input class="check-role" type="checkbox" value="@role.Value"></label>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    }
                 </tbody>
                 <tfoot>
 
                 </tfoot>
             </table>
+          
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script>
+        function initData() {
+            $('.controller-toggle').each(function () {
+                var name = $(this).data('id');
+                $('.controller-' + name).animate({
+                    height: 'toggle'
+                });
+               
+            });
+        }
+
+        initData();
+
+        $(document).ready(function () {
+            $('.controller-toggle').click(function () {
+                var name = $(this).data('id');
+                $('.controller-' + name).animate({
+                    height: 'toggle'
+                });
+                //
+                //$('.controller-' + name).slideToggle("slow");
+            });
+        });
+    </script>
+}

@@ -6,8 +6,10 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Smart.Domain.Enums;
+using Smart.Service.Models;
 using Smart.Utility.Extensions;
 using Smart.Utility.StringHelper;
+using Smart.Website.Areas.Admin.Models;
 
 namespace Smart.Website.Areas.Admin.Controllers
 {
@@ -16,15 +18,21 @@ namespace Smart.Website.Areas.Admin.Controllers
         public IActionResult Index()
         {
             Assembly asm = Assembly.GetExecutingAssembly();
-            var ks = asm.GetTypes();
-            var lstController = asm.GetTypes().Where(type => typeof(Controller).IsAssignableFrom(type) && type.Namespace.Contains(NamespaceHelper.ControllerCustomer) && !type.IsNotPublic).ToList();
-            //
-            //.SelectMany(type => type.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public))
-            //.Where(m => !m.GetCustomAttributes(typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute), true).Any())
-            //.Select(x => new { Controller = x.DeclaringType.Name, Action = x.Name, ReturnType = x.ReturnType.Name, Attributes = String.Join(",", x.GetCustomAttributes().Select(a => a.GetType().Name.Replace("Attribute", ""))) })
-            //.OrderBy(x => x.Controller).ThenBy(x => x.Action).ToList();
-            var values = Enum.GetValues(typeof(PermisionEnum)).Cast<PermisionEnum>().Select(x => new { value = (int)x, name = x.GetDescription() } );
-            return View();
+
+            var controllerList = asm.GetTypes().Where(type => typeof(Controller).IsAssignableFrom(type) && type.Namespace.Contains(NamespaceHelper.ControllerCustomer) && !type.IsNotPublic)
+             .Select(x => new ControllerModel()
+             {
+                 ActionList = x.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public).Select(y => new ActionModel { Name = y.Name }).ToList(),
+                 Name = x.Name
+             }).ToList();
+
+            var model = new PermisionModel()
+            {
+                RoleList = Enum.GetValues(typeof(PermisionEnum)).Cast<PermisionEnum>().Select(y => new SelectionModel() { Value = ((int)y).ToString(), Name = y.GetDescription() }).OrderBy(r=>r.Value).ToList(),
+                ControllerList = controllerList
+            };
+
+            return View(model);
         }
     }
 }

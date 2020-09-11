@@ -5,8 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Settings\" />
-    <Folder Include="StringHelper\NewFolder\" />
+    <Compile Remove="Settings\**" />
+    <Compile Remove="StringHelper\NewFolder\**" />
+    <EmbeddedResource Remove="Settings\**" />
+    <EmbeddedResource Remove="StringHelper\NewFolder\**" />
+    <None Remove="Settings\**" />
+    <None Remove="StringHelper\NewFolder\**" />
   </ItemGroup>
 
 </Project>

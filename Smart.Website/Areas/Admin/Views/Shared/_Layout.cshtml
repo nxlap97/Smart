@@ -12,6 +12,7 @@
     <title>@ViewBag.Title</title>
 
     <partial name="_Css.cshtml" />
+    @RenderSection("Css", required: false)
 </head>
 <body onload="@ViewData["BodyCss"]">
     <div class="tap-top"><i data-feather="chevrons-up"></i></div>

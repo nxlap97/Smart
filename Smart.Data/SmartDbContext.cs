@@ -33,6 +33,10 @@ namespace Smart.Data
         public DbSet<ProductCategory> ProductCategories { set; get; }
         public DbSet<Customer> Customers { set; get; }
         public DbSet<Employer> Employers { set; get; }
+        public DbSet<GroupRole> GroupRoles { set; get; }
+        public DbSet<Permision> Permisions { set; get; }
+        public DbSet<UserRoleGroup> UserRoleGroups { set; get; }
+        public DbSet<TrackingActive> TrackingActives { set; get; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -53,8 +57,8 @@ namespace Smart.Data
             IConfiguration configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json").Build();
-            var builder = new DbContextOptionsBuilder<SmartDbContext>();
             var connectionString = configuration.GetConnectionString("DefaultConnection");
+            var builder = new DbContextOptionsBuilder<SmartDbContext>();
             builder.UseSqlServer(connectionString);
             return new SmartDbContext(builder.Options);
         }

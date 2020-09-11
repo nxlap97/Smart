@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Smart.Domain.Enums;
 using Smart.Service.Models;
 using Smart.Utility.Extensions;
@@ -15,11 +16,22 @@ namespace Smart.Website.Areas.Admin.Controllers
 {
     public class PermisionController : AdminController
     {
+        private readonly IConfiguration _configuration;
+        public PermisionController(IConfiguration configuaration)
+        {
+            _configuration = configuaration;
+        }
         public IActionResult Index()
         {
+            var controllerExcepts = _configuration.GetValue<string>("Permisions:ExceptsController")?.Split(",").ToList();
+            var Namespace = _configuration.GetValue<string>("Permisions:NamespaceCustomer");
+
             Assembly asm = Assembly.GetExecutingAssembly();
 
-            var controllerList = asm.GetTypes().Where(type => typeof(Controller).IsAssignableFrom(type) && type.Namespace.Contains(NamespaceHelper.ControllerCustomer) && !type.IsNotPublic)
+            var controllerList = asm.GetTypes().Where( type => typeof(Controller).IsAssignableFrom(type) 
+                                                        && (string.IsNullOrWhiteSpace(Namespace) || type.Namespace.Contains(Namespace)) 
+                                                        && !controllerExcepts.Contains(type.Name)
+                                                        && !type.IsNotPublic)
              .Select(x => new ControllerModel()
              {
                  ActionList = x.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public).Select(y => new ActionModel { Name = y.Name }).ToList(),

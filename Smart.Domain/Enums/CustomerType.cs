@@ -10,6 +10,7 @@ namespace Smart.Core.Domain.Enums
         Siliver = 1,
         Gold = 2, 
         Vip = 3,
+        Mod = 4,
         Administrator = 100,
         SAdministrator = 101
     }

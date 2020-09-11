@@ -7,7 +7,6 @@ namespace Smart.Core.Domain
     public class AppRole : ParentEntity<string>
     {
         public string Name { get; set; }
-
         public string Description { get; set; }
     }
 }

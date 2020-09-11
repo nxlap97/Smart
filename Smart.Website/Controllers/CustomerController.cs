@@ -12,10 +12,10 @@ using Smart.Website.Extensions;
 
 namespace Smart.Website.Controllers
 {
-    public class CustomerController : Controller
+    public class CustomerController : BaseController
     {
         private readonly ICustomerService _customerService;
-        public CustomerController(ICustomerService customerService)
+        public CustomerController(ICustomerService customerService, IServiceProvider serviceProvider) : base(serviceProvider)
         {
             _customerService = customerService;
         }

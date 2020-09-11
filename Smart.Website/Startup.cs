@@ -38,6 +38,7 @@ namespace Smart.Website
             services.AddTransient(typeof(IRepository<,>), typeof(Repository<,>));
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<ICustomerService, CustomerService>();
+            services.AddTransient<IAppRoleService, AppRoleService>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {

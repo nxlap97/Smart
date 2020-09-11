@@ -7,11 +7,11 @@ using Smart.Service.Interfaces;
 
 namespace Smart.Website.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly IProductService _productService;
 
-        public HomeController(IProductService productService)
+        public HomeController(IProductService productService, IServiceProvider serviceProvider) : base(serviceProvider)
         {
             _productService = productService;
         }

@@ -36,7 +36,7 @@ namespace Smart.Data
         public DbSet<GroupRole> GroupRoles { set; get; }
         public DbSet<Permision> Permisions { set; get; }
         public DbSet<UserRoleGroup> UserRoleGroups { set; get; }
-        public DbSet<TrackingActive> TrackingActives { set; get; }
+        //public DbSet<TrackingActive> TrackingActives { set; get; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

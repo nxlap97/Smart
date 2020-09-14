@@ -35,7 +35,9 @@
             @RenderBody()
             @await Component.InvokeAsync("FooterAdmin")
         </div>
+
     </div>
+    <partial name="_Modal.cshtml" />
     <partial name="_Scripts.cshtml" />
 
     @RenderSection("Scripts", required: false)

@@ -1,6 +1,6 @@
-﻿@model PermisionModel
+﻿@model List<AppRole>
 @{
-    ViewBag.Title = "Permision";
+    ViewBag.Title = "Roles";
 }
 
 @section Css{
@@ -36,12 +36,13 @@
 }
 <div class="page-body">
     <div class="container-fluid">
+       
         <div class="page-header">
             <div class="row">
                 <div class="col-6">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html"><i data-feather="home"></i></a></li>
-                        <li class="breadcrumb-item">Permision</li>
+                        <li class="breadcrumb-item">Role</li>
                     </ol>
                 </div>
                 <div class="col-6">
@@ -88,52 +89,39 @@
             <table class="table">
                 <thead>
                     <tr>
-                        @*<th width="5%"> </th>*@
-                        <th colspan="2">Name</th>
-                        @foreach (var role in Model.RoleList)
-                        {
-                            <th class="check-all-role">@role.Name</th>
-                        }
+                        <th width="5%">STT</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>#</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var controller in Model.ControllerList)
+                    @foreach (var role in Model)
                     {
-                        var indexOf = Model.ControllerList.IndexOf(controller) + 1;
+                        var indexOf = Model.IndexOf(role) + 1;
+                        <tr>
+                            <td>@indexOf</td>
+                            <td>@role.Name</td>
+                            <td>@role.Description</td>
+                            <td>
+                                <a data-id="@role.Id" href="#" class="btn btn-primary btn-add-permision" data-toggle="modal" data-target="#popup-modal-common">
+                                    permision
+                                </a>
 
-                        <tr class="controller">
-                            <td colspan="2" class="controller-toggle" data-id="@controller.Name">@controller.Name</td>
-                            @foreach (var role in Model.RoleList)
-                            {
-                                <td class="text-align-center">
-                                    <label><input class="check-role role-controller role-controller-@role.Name.ToLower()-@indexOf" data-id="@indexOf" data-role="@role.Name.ToLower()" type="checkbox" value="@role.Value"></label>
-                                </td>
-                            }
+                                <a href="javascript:avoid(0)" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                            </td>
                         </tr>
-                        foreach (var action in controller.ActionList)
-                        {
-                            var index = controller.ActionList.IndexOf(action) + 1;
-                            <tr class="controller-@controller.Name">
-                                <td width="2%">@index .</td>
-                                <td>@action.Name</td>
-                                @foreach (var role in Model.RoleList)
-                                {
-                                    <td class="text-align-center">
-                                        <label><input class="check-role check-role-action role-action-@role.Name.ToLower()-@indexOf" data-id="@indexOf" data-role="@role.Name.ToLower()" type="checkbox" value="@role.Value"></label>
-                                    </td>
-                                }
-                            </tr>
-                        }
                     }
                 </tbody>
-                <tfoot>
-
-                </tfoot>
             </table>
 
         </div>
     </div>
 </div>
+
+
+
+
 
 @section Scripts{
     <script>
@@ -167,12 +155,30 @@
             $('.check-role-action').click(function () {
                 var indexOf = $(this).data('id');
                 var roleName = $(this).data('role');
-                if ($('.role-action-' + roleName + '-' + indexOf + ':checked').length == $('.role-action-' + roleName + '-' + indexOf).length) 
+                if ($('.role-action-' + roleName + '-' + indexOf + ':checked').length == $('.role-action-' + roleName + '-' + indexOf).length)
                     $('table input.role-controller-' + roleName + '-' + indexOf).prop('checked', 'checked');
                 else
                     $('table input.role-controller-' + roleName + '-' + indexOf).prop('checked', '');
+            });
+
+            $('.btn-add-permision').click(function () {
+                var id = $(this).data('id');
+                $('#popup-modal-common .modal-body').html(' <div class="loader-box"><div class= "loader-32"></div></div>');
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("PermisionList", "Permision")",
+                    data: { roleId: id },
+                    success: function (result) {
+                       
+                        $('#popup-modal-common .modal-body').html(result.html);
+                    },
+                    dataType: 'JSON'
+                });
             });
         });
 
     </script>
 }
+
+

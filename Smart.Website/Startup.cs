@@ -15,6 +15,7 @@ using Smart.Data.Infrastructor;
 using Smart.Service.EF;
 using Smart.Service.Interfaces;
 using Smart.Website.Infrastructor.SignalR_Message;
+using Smart.Website.Services;
 
 namespace Smart.Website
 {
@@ -39,6 +40,9 @@ namespace Smart.Website
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<ICustomerService, CustomerService>();
             services.AddTransient<IAppRoleService, AppRoleService>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IViewEnginerService, ViewEnginerService>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {

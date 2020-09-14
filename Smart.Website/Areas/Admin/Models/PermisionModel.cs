@@ -15,6 +15,9 @@ namespace Smart.Website.Areas.Admin.Models
             RoleList = new List<SelectionModel>();
         }
 
+        public string RoleId { get; set; }
+        public string RoleName { get; set; }
+
         public List<SelectionModel> RoleList { get; set; }
         public List<ControllerModel> ControllerList { get; set; }
         

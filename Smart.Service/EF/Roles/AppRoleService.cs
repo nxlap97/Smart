@@ -19,5 +19,17 @@ namespace Smart.Service.EF
         {
             return _appRoleRepository.FindAll().ToList();
         }
+
+
+
+        public void insertRole(AppRole role)
+        {
+            _appRoleRepository.Add(role);
+        }
+
+        public void insertRoleGroups(List<GroupRole> groupRoles)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

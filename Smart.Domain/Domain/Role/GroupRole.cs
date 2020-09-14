@@ -1,4 +1,5 @@
 ﻿using Smart.Domain.Entity;
+using Smart.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,5 +14,6 @@ namespace Smart.Core.Domain
         public string RoleId { get; set; }
         public string ControllerName { get; set; }
         public string ActionName { get; set; }
+        public PermisionEnum Type { get; set; }
     }
 }

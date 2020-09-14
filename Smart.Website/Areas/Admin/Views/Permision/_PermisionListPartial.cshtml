@@ -5,8 +5,8 @@
 
 <div class="col-md-12">
     <div>
-        <input type="hidden" id="role-id" data-id="@Model.RoleId" />
-        <input type="hidden" id="role-name" data-id="@Model.RoleName" />
+        <input type="hidden" id="role-id" value="@Model.RoleId" />
+        <input type="hidden" id="role-name" value="@Model.RoleName" />
     </div>
     <table class="table">
         <thead>
@@ -35,13 +35,17 @@
                 foreach (var action in controller.ActionList)
                 {
                     var index = controller.ActionList.IndexOf(action) + 1;
-                    <tr class="controller-@controller.Name">
+                    
+                    <tr class="tr-action controller-@controller.Name">
                         <td width="2%">@index .</td>
                         <td>@action.Name</td>
                         @foreach (var role in Model.RoleList)
                         {
+                            var check = Model.RoleGroups.Exists(x=> x.ControllerName.ToLower() == controller.Name.ToLower() 
+                                                                        && x.ActionName.ToLower() == action.Name.ToLower()
+                                                                        && (int)x.PermisionEnumId == int.Parse(role.Value));
                             <td class="text-align-center">
-                                <label><input class="check-role check-role-action role-action-@role.Name.ToLower()-@indexOf" data-id="@indexOf" data-role="@role.Name.ToLower()" type="checkbox" value="@role.Value"></label>
+                                <label><input class="check-role check-role-action role-action-@role.Name.ToLower()-@indexOf" data-id="@indexOf" data-role="@role.Name.ToLower()" data-controller="@controller.Name" data-action="@action.Name" data-permision-id="@role.Value" type="checkbox" value="@role.Value" @(check ? "checked":"")></label>
                             </td>
                         }
                     </tr>
@@ -53,14 +57,28 @@
 </div>
 
 <script>
-    setTimeout(initData, 500);
+    setTimeout(function () {
+        initData();
+        TrackingCheckAll();
+    }, 500);
+
     function initData() {
         $('.controller-toggle').each(function () {
             var name = $(this).data('id');
             $('.controller-' + name).animate({
                 height: 'toggle'
             });
+        });
+    }
 
+    function TrackingCheckAll() {
+        $('.check-role-action').each(function () {
+            var indexOf = $(this).data('id');
+            var roleName = $(this).data('role');
+            if ($('.role-action-' + roleName + '-' + indexOf + ':checked').length == $('.role-action-' + roleName + '-' + indexOf).length)
+                $('table input.role-controller-' + roleName + '-' + indexOf).prop('checked', 'checked');
+            else
+                $('table input.role-controller-' + roleName + '-' + indexOf).prop('checked', '');
         });
     }
 
@@ -88,17 +106,39 @@
                 $('table input.role-controller-' + roleName + '-' + indexOf).prop('checked', '');
         });
 
-        //$('.close-modal').click(function (e) {
-        //    e.preventDefault();
-        //    $('#popup-modal-common').html('');
-        //    $('#popup-modal-common').modal("hide");
-        //    $('#popup-modal-common').css("display","");
-        //    $('#popup-modal-common').css("pading-right","");
-        //    $('#popup-modal-common').removeClass("show");
-        //    $('body').removeClass("modal-open");
-        //    $('.modal-backdrop').remove();
+        $('#popup-modal-common .btn-save-data').click(function () {
+            var lstData = [];
 
-        //});
+            $('.check-role-action:checked').each(function () {
+                var obj = {
+                    Id: $("#role-id").val(),
+                    PermisionEnumId: $(this).attr("data-permision-id"),
+                    ControllerName: $(this).attr('data-controller'),
+                    ActionName: $(this).attr('data-action')
+                };
+                lstData.push(obj);
+            });
+
+            $.ajax({
+                type: "POST",
+                url: '/Admin/Permision/UpdateRolePermision',
+                data: { JsonPost: JSON.stringify(lstData) },
+                success: function (result) {
+                    MessageNotify("SAVE", "Save data success","success");
+                    $('#popup-modal-common .close-modal').click();
+                },
+                error: function (error) {
+                    MessageNotify("ERROR", error.message,"danger");
+                },
+                dataType: "JSON"
+
+            });
+            //var objectData = {
+            //    roleId: $('#popup-modal-common #role-id').val(),
+                
+            //};
+        });
+
     });
 
 </script>

@@ -104,11 +104,11 @@
                             <td>@role.Name</td>
                             <td>@role.Description</td>
                             <td>
-                                <a data-id="@role.Id" href="#" class="btn btn-primary btn-add-permision" data-toggle="modal" data-target="#popup-modal-common">
-                                    permision
+                                <a data-id="@role.Id" data-name="@role.Name" href="#" class="btn btn-primary btn-add-permision" data-toggle="modal" data-target="#popup-modal-common">
+                                    <i class="icofont icofont-shield-alt"></i>
                                 </a>
 
-                                <a href="javascript:avoid(0)" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                <a href="javascript:avoid(0)" class="btn btn-danger"><i class="icofont icofont-trash"></i></a>
                             </td>
                         </tr>
                     }
@@ -164,14 +164,15 @@
             $('.btn-add-permision').click(function () {
                 var id = $(this).data('id');
                 $('#popup-modal-common .modal-body').html(' <div class="loader-box"><div class= "loader-32"></div></div>');
-
+                $('#popup-modal-common #role-id').html($(this).data('id'));
+                $('#popup-modal-common .modal-title').html($(this).data('name'));
                 $.ajax({
                     type: "POST",
                     url: "@Url.Action("PermisionList", "Permision")",
                     data: { roleId: id },
                     success: function (result) {
-                       
                         $('#popup-modal-common .modal-body').html(result.html);
+
                     },
                     dataType: 'JSON'
                 });

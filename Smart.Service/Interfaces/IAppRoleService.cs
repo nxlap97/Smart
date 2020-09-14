@@ -1,4 +1,5 @@
 ﻿using Smart.Core.Domain;
+using Smart.Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,6 +10,8 @@ namespace Smart.Service.Interfaces
     {
         List<AppRole> GetRoles();
         void insertRole(AppRole role);
-        void insertRoleGroups(List<GroupRole> groupRoles);
+        void insertRoleGroups(List<RoleGroup> groupRoles);
+        void deleteRoleGroups(string roleId);
+        List<RoleGroupModel> GetRoleGroups(string roleId);
     }
 }

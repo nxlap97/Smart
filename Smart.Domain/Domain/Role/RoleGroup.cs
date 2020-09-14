@@ -8,8 +8,8 @@ using System.Text;
 namespace Smart.Core.Domain
 
 {
-    [Table("GroupRoles")]
-    public class GroupRole : ParentEntity<string>
+    [Table("RoleGroups")]
+    public class RoleGroup : ParentEntity<string>
     {
         public string RoleId { get; set; }
         public string ControllerName { get; set; }

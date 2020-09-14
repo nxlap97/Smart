@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Smart.Data.Extensions;
+using Smart.Domain.Model;
 
 namespace Smart.Data
 {
@@ -33,9 +34,12 @@ namespace Smart.Data
         public DbSet<ProductCategory> ProductCategories { set; get; }
         public DbSet<Customer> Customers { set; get; }
         public DbSet<Employer> Employers { set; get; }
-        public DbSet<GroupRole> GroupRoles { set; get; }
+        public DbSet<RoleGroup> GroupRoles { set; get; }
         public DbSet<Permision> Permisions { set; get; }
         public DbSet<UserRoleGroup> UserRoleGroups { set; get; }
+
+        public DbQuery<RoleGroupModel> roleGroupQuerys { get; set; }
+
         //public DbSet<TrackingActive> TrackingActives { set; get; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -63,4 +67,5 @@ namespace Smart.Data
             return new SmartDbContext(builder.Options);
         }
     }
+
 }

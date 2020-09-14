@@ -71,6 +71,15 @@ namespace Smart.Data.Infrastructor
             UpdateInfo(entity.Id, InfoState.ADD);
         }
 
+        public void AddRang(List<T> entities)
+        {
+            _context.AddRange(entities);
+            foreach(var entity in entities)
+            {
+                UpdateInfo(entity.Id, InfoState.ADD);
+            }
+        }
+
         public void Dispose()
         {
             if (_context != null)
@@ -139,7 +148,6 @@ namespace Smart.Data.Infrastructor
             _context.Set<T>().Update(entity);
             UpdateInfo(entity.Id, InfoState.UPDATE);
         }
-
 
         public void SaveChange()
         {

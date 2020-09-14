@@ -13,6 +13,16 @@
 
     <partial name="_Css.cshtml" />
     @RenderSection("Css", required: false)
+    <style>
+        .alert [data-notify='message'] {
+            padding-bottom: 10px !important;
+            padding-top: 10px !important;
+        }
+
+        .alert button {
+            top: 25px !important;
+        }
+    </style>
 </head>
 <body onload="@ViewData["BodyCss"]">
     <div class="tap-top"><i data-feather="chevrons-up"></i></div>

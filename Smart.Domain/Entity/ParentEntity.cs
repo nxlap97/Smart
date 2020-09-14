@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Smart.Domain.Entity
 {
@@ -6,8 +7,14 @@ namespace Smart.Domain.Entity
     {
         public ParentEntity()
         {
-            //var type = Id.GetType();
-
+            if (typeof(T) == typeof(string))
+            {
+                if (string.IsNullOrWhiteSpace(Id?.ToString()))
+                {
+                    Id = (T)(object)(Guid.NewGuid().ToString());
+                }
+            }
+                
         }
 
         [Key]

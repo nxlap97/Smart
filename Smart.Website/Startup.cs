@@ -37,6 +37,7 @@ namespace Smart.Website
 
             //services.AddTransient(typeof(IUnitOfWork), typeof(EFUnitOfWork));
             services.AddTransient(typeof(IRepository<,>), typeof(Repository<,>));
+            services.AddTransient(typeof(IReadOnlyRepository), typeof(ReadOnlyRepostory));
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<ICustomerService, CustomerService>();
             services.AddTransient<IAppRoleService, AppRoleService>();

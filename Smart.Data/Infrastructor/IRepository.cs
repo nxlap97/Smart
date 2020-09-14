@@ -17,6 +17,7 @@ namespace Smart.Data.Infrastructor
         IQueryable<T> FindAll(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties);
 
         void Add(T entity);
+        void AddRang(List<T> entities);
 
         void Update(T entity);
 

@@ -6,6 +6,8 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Smart.Core.Domain;
 using Smart.Domain.Enums;
 using Smart.Service.Interfaces;
 using Smart.Service.Models;
@@ -34,20 +36,28 @@ namespace Smart.Website.Areas.Admin.Controllers
 
             Assembly asm = Assembly.GetExecutingAssembly();
 
-            var controllerList = asm.GetTypes().Where( type => typeof(Controller).IsAssignableFrom(type) 
-                                                        && (string.IsNullOrWhiteSpace(Namespace) || type.Namespace.Contains(Namespace)) 
-                                                        && !controllerExcepts.Contains(type.Name)
-                                                        && !type.IsNotPublic)
-             .Select(x => new ControllerModel()
-             {
-                 ActionList = x.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public).Select(y => new ActionModel { Name = y.Name }).ToList(),
-                 Name = x.Name
-             }).ToList();
+            var controllerList = asm.GetTypes().Where(type => typeof(Controller).IsAssignableFrom(type)
+                                                       && (string.IsNullOrWhiteSpace(Namespace) || type.Namespace.Contains(Namespace))
+                                                       && !controllerExcepts.Contains(type.Name)
+                                                       && !type.IsNotPublic);
+            var controllerListModel = new List<ControllerModel>();
+
+            foreach (var controller in controllerList)
+            {
+                var actionName = controller.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public).Select(y => y.Name).Distinct().ToList();
+
+                var controllerModel = new ControllerModel()
+                {
+                    ActionList = actionName.Select(x => new ActionModel() { Name = x }).ToList(),
+                    Name = controller.Name
+                };
+                controllerListModel.Add(controllerModel);
+            }
 
             var model = new PermisionModel()
             {
                 RoleList = Enum.GetValues(typeof(PermisionEnum)).Cast<PermisionEnum>().Select(y => new SelectionModel() { Value = ((int)y).ToString(), Name = y.GetDescription() }).OrderBy(r=>r.Value).ToList(),
-                ControllerList = controllerList
+                ControllerList = controllerListModel
             };
 
             return View(model);
@@ -74,17 +84,54 @@ namespace Smart.Website.Areas.Admin.Controllers
                                                        && !type.IsNotPublic)
              .Select(x => new ControllerModel()
              {
-                 ActionList = x.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public).Select(y => new ActionModel { Name = y.Name }).ToList(),
+                 ActionList = x.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public)
+                                .Select(y=>y.Name).Distinct().Select(z => new ActionModel { Name = z }).ToList(),
                  Name = x.Name
              }).ToList();
 
             var model = new PermisionModel()
             {
-                RoleList = Enum.GetValues(typeof(PermisionEnum)).Cast<PermisionEnum>().Select(y => new SelectionModel() { Value = ((int)y).ToString(), Name = y.GetDescription() }).OrderBy(r => r.Value).ToList(),
-                ControllerList = controllerList
+                RoleId = roleId,
+                RoleList = Enum.GetValues(typeof(PermisionEnum)).Cast<PermisionEnum>()
+                                .Select(y => new SelectionModel() { Value = ((int)y).ToString(), Name = y.GetDescription() })
+                                .OrderBy(r => r.Value).ToList(),
+                ControllerList = controllerList,
+                RoleGroups = _roleService.GetRoleGroups(roleId).Select(x=> new RoleGroupModel() { 
+                                    ActionName  = x.ActionName,
+                                    ControllerName = x.ControllerName,
+                                    Id =x.Id,
+                                    PermisionEnumId = x.Type
+                            }).ToList(),
             };
             var render = _viewEngineService.RenderPartialToStringAsync("~/Areas/Admin/Views/Permision/_PermisionListPartial.cshtml", model);
             return Json(new { status = true, html = render.Result });
+        }
+
+        [HttpPost] 
+        public IActionResult UpdateRolePermision(string JsonPost)
+        {
+            var model = JsonConvert.DeserializeObject<List<RoleGroupModel>>(JsonPost);
+            var lstRole = new List<RoleGroup>();
+            var roleId = "";
+            model.ForEach(x =>
+            {
+                var roleGroup = new RoleGroup()
+                {
+                    ActionName = x.ActionName,
+                    ControllerName = x.ControllerName,
+                    RoleId = x.Id,
+                    Type = x.PermisionEnumId,
+                    
+                };
+                lstRole.Add(roleGroup);
+                roleId = x.Id;
+            });
+
+            if(!string.IsNullOrWhiteSpace(roleId))
+                _roleService.deleteRoleGroups(roleId);
+
+            _roleService.insertRoleGroups(lstRole);
+            return Json(new { status = true, message = "" });
         }
     }
 }

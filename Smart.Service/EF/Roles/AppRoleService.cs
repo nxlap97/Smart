@@ -40,7 +40,8 @@ namespace Smart.Service.EF
 
         public List<RoleGroupModel> GetRoleGroups(string roleId)
         {
-            var json = _readOnlyRepository.GetList(roleId);
+            var filter = new KeyValuePair<string, string>("RoleId", roleId);
+            var json = _readOnlyRepository.GetList(filter, "SP_GetRoleGroups");
             var model  = JsonConvert.DeserializeObject<List<RoleGroupModel>>(json);
             return model;
         }

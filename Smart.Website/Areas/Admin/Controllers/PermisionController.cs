@@ -120,8 +120,7 @@ namespace Smart.Website.Areas.Admin.Controllers
                     ActionName = x.ActionName,
                     ControllerName = x.ControllerName,
                     RoleId = x.Id,
-                    Type = x.PermisionEnumId,
-                    
+                    Type = x.PermisionEnumId, 
                 };
                 lstRole.Add(roleGroup);
                 roleId = x.Id;

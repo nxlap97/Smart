@@ -7,6 +7,6 @@ namespace Smart.Data.Infrastructor
 {
     public interface IReadOnlyRepository
     {
-        string GetList(string roleId,int pageIndex = 1, int pageSize = int.MaxValue);
+        string GetList(KeyValuePair<string, string> filter, string sp_name);
     }
 }

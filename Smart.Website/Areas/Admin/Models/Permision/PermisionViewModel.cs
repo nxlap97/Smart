@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Smart.Website.Areas.Admin.Models
 {
-    public class PermisionModel
+    public class PermisionViewModel
     {
-        public PermisionModel()
+        public PermisionViewModel()
         {
             ControllerList = new List<ControllerModel>();
             RoleList = new List<SelectionModel>();
-            RoleGroups = new List<RoleGroupModel>();
+            RoleGroups = new List<RoleGroupViewModel>();
         }
 
         public string RoleId { get; set; }
@@ -22,7 +22,7 @@ namespace Smart.Website.Areas.Admin.Models
         public List<SelectionModel> RoleList { get; set; }
         public List<ControllerModel> ControllerList { get; set; }
 
-        public List<RoleGroupModel> RoleGroups { get; set; }
+        public List<RoleGroupViewModel> RoleGroups { get; set; }
         
     }
 

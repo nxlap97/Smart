@@ -18,6 +18,21 @@ namespace Smart.Data.Infrastructor
                 _context = context;
         }
 
+        public string GetListNoneFilter(string sp_name)
+        {
+            var dataJsonParam = new SqlParameter
+            {
+                ParameterName = "JsonData",
+                DbType = System.Data.DbType.String,
+                Size = Int32.MaxValue,
+                Direction = System.Data.ParameterDirection.Output
+            };
+
+            _context.Database.ExecuteSqlCommand($"exec {sp_name} @JsonData OUTPUT", dataJsonParam);
+
+            return dataJsonParam.Value.ToString();
+        }
+
         public string GetList(KeyValuePair<string, string> filter,string sp_name)
         {
             var paramIdParameter = new SqlParameter

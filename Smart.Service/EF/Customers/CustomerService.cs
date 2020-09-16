@@ -1,8 +1,11 @@
-﻿using Smart.Core.Domain;
+﻿using Newtonsoft.Json;
+using Smart.Core.Domain;
 using Smart.Core.Domain.Enums;
 using Smart.Data.Infrastructor;
+using Smart.Domain.Model;
 using Smart.Service.Interfaces;
 using Smart.Service.Models;
+using Smart.Utility.StringHelper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +16,11 @@ namespace Smart.Service.EF
     public class CustomerService : ICustomerService
     {
         private readonly IRepository<Customer, string> _customerService;
-        public CustomerService(IRepository<Customer, string> customerService)
+        private readonly IReadOnlyRepository _readOnlyRepository;
+        public CustomerService(IRepository<Customer, string> customerService, IReadOnlyRepository readOnlyRepository)
         {
             _customerService = customerService;
+            _readOnlyRepository = readOnlyRepository;
         }
         public ResultStatus<Customer> CheckSignIn(string userName, string password)
         {
@@ -40,6 +45,13 @@ namespace Smart.Service.EF
             }
             
             return result;
+        }
+
+        public List<CustomerModel> GetCustomers()
+        {
+            var json = _readOnlyRepository.GetListNoneFilter(StoreProduceHelper.SP_GetCustomers);
+            var model = JsonConvert.DeserializeObject<List<CustomerModel>>(json);
+            return model;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Smart.Core.Domain;
+using Smart.Domain.Model;
 using Smart.Service.Models;
 using System;
 using System.Collections.Generic;
@@ -12,5 +13,6 @@ namespace Smart.Service.Interfaces
 
         #endregion
         ResultStatus<Customer> CheckSignIn(string userName, string password);
+        List<CustomerModel> GetCustomers();
     }
 }

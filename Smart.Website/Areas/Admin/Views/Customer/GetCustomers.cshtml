@@ -1,4 +1,4 @@
-﻿@model List<AppRole>
+﻿@model List<CustomerModel>
 @{
     ViewBag.Title = "Roles";
 }
@@ -34,9 +34,10 @@
         }
     </style>
 }
+
 <div class="page-body">
     <div class="container-fluid">
-       
+
         <div class="page-header">
             <div class="row">
                 <div class="col-6">
@@ -91,23 +92,24 @@
                     <tr>
                         <th width="5%">STT</th>
                         <th>Name</th>
-                        <th>Description</th>
+                        <th>CreatedDate</th>
+                        <th>Type</th>
                         <th>#</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var role in Model)
+                    @foreach (var customer in Model)
                     {
-                        var indexOf = Model.IndexOf(role) + 1;
+                        var indexOf = Model.IndexOf(customer) + 1;
                         <tr>
                             <td>@indexOf</td>
-                            <td>@role.Name</td>
-                            <td>@role.Description</td>
+                            <td>@customer.UserName</td>
+                            <td>@customer.CreatedDate?.ToString("dd-MM-yyyy")</td>
+                            <td>@customer.Type.GetDescription()</td>
                             <td>
-                                <a data-id="@role.Id" data-name="@role.Name" href="#" class="btn btn-primary btn-add-permision" data-toggle="modal" data-target="#popup-modal-common">
-                                    <i class="icofont icofont-shield-alt"></i>
+                                <a href="#" class="btn btn-primary btn-add-role" data-id="@customer.Id" data-name="@customer.UserName" data-toggle="modal" data-target="#popup-modal-common">
+                                    <i class="icofont icofont-settings-alt"></i>
                                 </a>
-
                                 <a href="javascript:avoid(0)" class="btn btn-danger"><i class="icofont icofont-trash"></i></a>
                             </td>
                         </tr>
@@ -119,54 +121,21 @@
     </div>
 </div>
 
+
+
 @section Scripts{
     <script>
-        function initData() {
-            $('.controller-toggle').each(function () {
-                var name = $(this).data('id');
-                $('.controller-' + name).animate({
-                    height: 'toggle'
-                });
-
-            });
-        }
-
-        initData();
-
         $(document).ready(function () {
-            $('.controller-toggle').click(function () {
-                var name = $(this).data('id');
-                $('.controller-' + name).animate({
-                    height: 'toggle'
-                });
 
-            });
-
-            $('.role-controller').click(function () {
-                var indexOf = $(this).data('id');
-                var roleName = $(this).data('role');
-                var idx = $(this).parent().index();
-                $('table input.role-action-' + roleName + '-' + indexOf).prop('checked', this.checked);
-            });
-
-            $('.check-role-action').click(function () {
-                var indexOf = $(this).data('id');
-                var roleName = $(this).data('role');
-                if ($('.role-action-' + roleName + '-' + indexOf + ':checked').length == $('.role-action-' + roleName + '-' + indexOf).length)
-                    $('table input.role-controller-' + roleName + '-' + indexOf).prop('checked', 'checked');
-                else
-                    $('table input.role-controller-' + roleName + '-' + indexOf).prop('checked', '');
-            });
-
-            $('.btn-add-permision').click(function () {
+            $('.btn-add-role').click(function () {
                 var id = $(this).data('id');
                 $('#popup-modal-common .modal-body').html(' <div class="loader-box"><div class= "loader-32"></div></div>');
-                $('#popup-modal-common #role-id').html($(this).data('id'));
+                $('#popup-modal-common #customer-id').html($(this).data('id'));
                 $('#popup-modal-common .modal-title').html($(this).data('name'));
                 $.ajax({
                     type: "POST",
-                    url: "@Url.Action("PermisionList", "Permision")",
-                    data: { roleId: id },
+                    url: "@Url.Action("GetUserRoles", "Permision")",
+                    data: { customerId: id },
                     success: function (result) {
                         $('#popup-modal-common .modal-body').html(result.html);
 
@@ -178,5 +147,3 @@
 
     </script>
 }
-
-

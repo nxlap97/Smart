@@ -3,6 +3,7 @@ using Smart.Core.Domain;
 using Smart.Data.Infrastructor;
 using Smart.Domain.Model;
 using Smart.Service.Interfaces;
+using Smart.Utility.StringHelper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,14 @@ namespace Smart.Service.EF
             return _appRoleRepository.FindAll().ToList();
         }
 
+        public List<UserRole> GetUserRoles(string customerId)
+        {
+            var filter = new KeyValuePair<string, string>("CustomerId", customerId);
+            var json = _readOnlyRepository.GetList(filter, StoreProduceHelper.SP_GetUserRoles);
+            var model = JsonConvert.DeserializeObject<List<UserRole>>(json);
+            return model;
+        }
+
         public void insertRole(AppRole role)
         {
             _appRoleRepository.Add(role);
@@ -41,7 +50,7 @@ namespace Smart.Service.EF
         public List<RoleGroupModel> GetRoleGroups(string roleId)
         {
             var filter = new KeyValuePair<string, string>("RoleId", roleId);
-            var json = _readOnlyRepository.GetList(filter, "SP_GetRoleGroups");
+            var json = _readOnlyRepository.GetList(filter, StoreProduceHelper.SP_GetRoleGroups);
             var model  = JsonConvert.DeserializeObject<List<RoleGroupModel>>(json);
             return model;
         }

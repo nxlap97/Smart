@@ -1,0 +1,93 @@
+﻿@model CustomerRoleViewModel
+@{
+    Layout = null;
+}
+<div class="col-md-12">
+    <div>
+        <input type="hidden" id="customer-id" value="" />
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th width="5%">STT</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th style="text-align:center">
+                    <label>
+                        <input class="check-role check-all-role" type="checkbox">
+                    </label>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var role in Model.Roles)
+            {
+                var indexOf = Model.Roles.IndexOf(role) + 1;
+                var hasRole = "";
+                if(Model.UserRoles != null)
+                {
+                    hasRole = Model.UserRoles.Exists(x => x.RoleId == role.Id) ? "checked" : "";
+                }
+                <tr>
+                    <td>@indexOf</td>
+                    <td>@role.Name</td>
+                    <td>@role.Description</td>
+                    <td style="text-align:center">
+                        <label>
+                            <input class="check-role check-role-item" data-id="@role.Id" type="checkbox" @hasRole>
+                        </label>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $('.check-all-role').click(function () {
+            $('table input.check-role-item').prop('checked', this.checked);
+        });
+
+        $('.check-role-item').click(function () {
+            TrackingCheckAll();
+        });
+
+        $('#popup-modal-common .btn-save-data').click(function () {
+            var lstData = [];
+
+            $('.check-role-item:checked').each(function () {
+                var obj = {
+                    CustomerId: $("#customer-id").val(),
+                    RoleId: $(this).attr('data-id'),
+                };
+                lstData.push(obj);
+            });
+
+            $.ajax({
+                type: "POST",
+                url: '/Admin/Permision/UpdateRolePermision',
+                data: { JsonPost: JSON.stringify(lstData) },
+                success: function (result) {
+                    MessageNotify("SAVE", "Save data success", "success");
+                    $('#popup-modal-common .close-modal').click();
+                },
+                error: function (error) {
+                    MessageNotify("ERROR", error.message, "danger");
+                },
+                dataType: "JSON"
+
+            });
+        });
+    });
+    function TrackingCheckAll() {
+        if ($('.check-role-item').length == $('.check-role-item:checked').length)
+            $('table input.check-all-role').prop('checked', 'checked')
+        else
+            $('table input.check-all-role').prop('checked', '');
+    }
+
+   
+</script>

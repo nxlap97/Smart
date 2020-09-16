@@ -7,10 +7,10 @@ using System.Text;
 
 namespace Smart.Core.Domain
 {
-    [Table("UserRoleGroups")]
-    public class UserRoleGroup : ParentEntity<string>
+    [Table("UserRoles")]
+    public class UserRole : ParentEntity<string>
     {
         public string CustomerId { get; set; } 
-        public string GroupRoleId { get; set; } 
+        public string RoleId { get; set; } 
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Smart.Website.Areas.Admin.Models
 {
-    public class RoleGroupModel
+    public class RoleGroupViewModel
     {
         public string Id { get; set; }
         public string ControllerName { get; set; }

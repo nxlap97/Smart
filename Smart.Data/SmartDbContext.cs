@@ -36,7 +36,7 @@ namespace Smart.Data
         public DbSet<Employer> Employers { set; get; }
         public DbSet<RoleGroup> GroupRoles { set; get; }
         public DbSet<Permision> Permisions { set; get; }
-        public DbSet<UserRoleGroup> UserRoleGroups { set; get; }
+        public DbSet<UserRole> UserRoles { set; get; }
 
         public DbQuery<RoleGroupModel> roleGroupQuerys { get; set; }
 

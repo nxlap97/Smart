@@ -54,7 +54,7 @@ namespace Smart.Website.Areas.Admin.Controllers
                 controllerListModel.Add(controllerModel);
             }
 
-            var model = new PermisionModel()
+            var model = new PermisionViewModel()
             {
                 RoleList = Enum.GetValues(typeof(PermisionEnum)).Cast<PermisionEnum>().Select(y => new SelectionModel() { Value = ((int)y).ToString(), Name = y.GetDescription() }).OrderBy(r=>r.Value).ToList(),
                 ControllerList = controllerListModel
@@ -89,14 +89,14 @@ namespace Smart.Website.Areas.Admin.Controllers
                  Name = x.Name
              }).ToList();
 
-            var model = new PermisionModel()
+            var model = new PermisionViewModel()
             {
                 RoleId = roleId,
                 RoleList = Enum.GetValues(typeof(PermisionEnum)).Cast<PermisionEnum>()
                                 .Select(y => new SelectionModel() { Value = ((int)y).ToString(), Name = y.GetDescription() })
                                 .OrderBy(r => r.Value).ToList(),
                 ControllerList = controllerList,
-                RoleGroups = _roleService.GetRoleGroups(roleId).Select(x=> new RoleGroupModel() { 
+                RoleGroups = _roleService.GetRoleGroups(roleId).Select(x=> new RoleGroupViewModel() { 
                                     ActionName  = x.ActionName,
                                     ControllerName = x.ControllerName,
                                     Id =x.Id,
@@ -110,7 +110,7 @@ namespace Smart.Website.Areas.Admin.Controllers
         [HttpPost] 
         public IActionResult UpdateRolePermision(string JsonPost)
         {
-            var model = JsonConvert.DeserializeObject<List<RoleGroupModel>>(JsonPost);
+            var model = JsonConvert.DeserializeObject<List<RoleGroupViewModel>>(JsonPost);
             var lstRole = new List<RoleGroup>();
             var roleId = "";
             model.ForEach(x =>
@@ -127,6 +127,45 @@ namespace Smart.Website.Areas.Admin.Controllers
             });
 
             if(!string.IsNullOrWhiteSpace(roleId))
+                _roleService.deleteRoleGroups(roleId);
+
+            _roleService.insertRoleGroups(lstRole);
+            return Json(new { status = true, message = "" });
+        }
+
+        [HttpPost]
+        public IActionResult GetUserRoles(string customerId)
+        {
+            var model = new CustomerRoleViewModel()
+            {
+                Roles = _roleService.GetRoles(),
+                UserRoles = _roleService.GetUserRoles(customerId),
+                CustomerId = customerId
+            };
+            var render = _viewEngineService.RenderPartialToStringAsync("~/Areas/Admin/Views/Permision/_RoleListPartial.cshtml", model);
+            return Json(new { status = true, html = render.Result });
+        }
+
+        [HttpPost]
+        public IActionResult UpdateCustomerRole(string JsonPost)
+        {
+            var model = JsonConvert.DeserializeObject<List<RoleGroupViewModel>>(JsonPost);
+            var lstRole = new List<RoleGroup>();
+            var roleId = "";
+            model.ForEach(x =>
+            {
+                var roleGroup = new RoleGroup()
+                {
+                    ActionName = x.ActionName,
+                    ControllerName = x.ControllerName,
+                    RoleId = x.Id,
+                    Type = x.PermisionEnumId,
+                };
+                lstRole.Add(roleGroup);
+                roleId = x.Id;
+            });
+
+            if (!string.IsNullOrWhiteSpace(roleId))
                 _roleService.deleteRoleGroups(roleId);
 
             _roleService.insertRoleGroups(lstRole);

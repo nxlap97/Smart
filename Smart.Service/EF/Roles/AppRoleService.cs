@@ -88,5 +88,13 @@ namespace Smart.Service.EF
             if(cusstomerRoles.Count() > 0)
                 _userRoleRepository.RemoveMultiple(cusstomerRoles);
         }
+
+        public List<PermisionCustomerModel> checkAccessPermision(string customerId)
+        {
+            var filter = new KeyValuePair<string, string>("CustomerId", customerId);
+            var json = _readOnlyRepository.GetList(filter, StoreProduceHelper.SP_GetRoleCheckPermisions);
+            var model = JsonConvert.DeserializeObject<List<PermisionCustomerModel>>(json);
+            return model;
+        }
     }
 }

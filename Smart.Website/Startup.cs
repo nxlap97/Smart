@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -46,19 +47,50 @@ namespace Smart.Website
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IViewEnginerService, ViewEnginerService>();
 
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
-            services.AddSession(options =>
-            {
-                options.IdleTimeout = TimeSpan.FromSeconds(600);
-                options.Cookie.HttpOnly = true;
-                options.Cookie.IsEssential = true;
-            });
-            ConfigAuthCustomer(services);
+            //services.Configure<CookiePolicyOptions>(options =>
+            //{
+            //    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+            //    options.CheckConsentNeeded = context => true;
+            //    options.MinimumSameSitePolicy = SameSiteMode.None;
+            //});
+            //
+            //services.AddSession(options =>
+            //{
+            //    options.IdleTimeout = TimeSpan.FromMinutes(60);
+            //    options.Cookie.HttpOnly = true;
+            //    options.Cookie.IsEssential = true;
+            //});
+
+
+            //services.ConfigureApplicationCookie(options =>
+            //{
+            //    // Cookie settings
+            //    options.Cookie.HttpOnly = true;
+            //    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+            //
+            //    options.LoginPath = "/Customer/Login";
+            //    options.AccessDeniedPath = "/Customer/Login";
+            //    options.SlidingExpiration = true;
+            //});
+
+
+            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            //        .AddCookie();
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+             .AddCookie(options =>
+             {
+                 options.LoginPath = new PathString("/dang-nhap.html");
+                 options.ReturnUrlParameter = "RequestPath";
+                 options.Events.OnRedirectToLogin = (context) =>
+                 {
+                     context.Response.StatusCode = 401;
+                     return Task.CompletedTask;
+                 };
+
+             
+             });
+
             ConfigureSignalR(services);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -66,8 +98,8 @@ namespace Smart.Website
 
         public void ConfigAuthCustomer(IServiceCollection services)
         {
-            services.AddAuthentication("SmartSecurityScheme")
-            .AddCookie("SmartSecurityScheme", options =>
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie("cookies", options =>
             {
                 options.AccessDeniedPath = new PathString("/dang-nhap.html");
                 // access
@@ -135,8 +167,16 @@ namespace Smart.Website
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
             app.UseAuthentication();
+
+            app.UseCookiePolicy(new CookiePolicyOptions() {
+
+                MinimumSameSitePolicy = SameSiteMode.Strict,
+            });
+
+
+
+
             app.UseCors(x => x
                .AllowAnyOrigin()
                .AllowAnyMethod()

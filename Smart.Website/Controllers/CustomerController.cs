@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Smart.Service.Interfaces;
 using Smart.Service.Models;
@@ -37,30 +38,25 @@ namespace Smart.Website.Controllers
             var result = _customerService.CheckSignIn(model.UserName, model.Password);
             if (!result.Status)
                 return View();
-
-            // create claims
             List<Claim> claims = new List<Claim>
              {
                  new Claim(ClaimHelper.ID, result.Object.Id),
                  new Claim(ClaimHelper.USERNAME, result.Object.UserName)
-                 //new Claim(ClaimHelper.IP_ADDRESS, result.Object.IPAddress)
              };
 
-            ClaimsIdentity identity = new ClaimsIdentity(claims, "cookie");
+            ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             ClaimsPrincipal principal = new ClaimsPrincipal(identity);
 
-            // sign-in
             await HttpContext.SignInAsync(
-                    scheme: "SmartSecurityScheme",
-                    principal: principal,
-                    properties: new AuthenticationProperties
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(principal),
+                    new AuthenticationProperties
                     {
-                        //IsPersistent = true, // for 'remember me' feature
-                        //ExpiresUtc = DateTime.UtcNow.AddMinutes(1)
-                    }
-             );
+                        IsPersistent = true,
+                        ExpiresUtc = DateTime.UtcNow.AddMinutes(20)
+                    });
 
-            var userId = User.GetSpecificClaim(ClaimHelper.ID);
+            var userId = HttpContext.User.GetSpecificClaim(ClaimHelper.ID);
 
             return Redirect(model.RequestPath ?? "/");
         }
@@ -69,7 +65,7 @@ namespace Smart.Website.Controllers
         [Route("dang-xuat.html")]
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync("SmartSecurityScheme");
+            await HttpContext.SignOutAsync();
 
             return Redirect("/");
         }

@@ -10,5 +10,6 @@ namespace Smart.Utility.StringHelper
         public static string SP_GetCustomers = "SP_GetCustomers";
         public static string SP_GetRolesByCustomerId = "SP_GetRolesByCustomerId";
         public static string SP_GetUserRoles = "SP_GetUserRoles";
+        public static string SP_GetRoleCheckPermisions = "SP_GetRoleCheckPermisions";
     }
 }

@@ -13,9 +13,9 @@ namespace Smart.Service.Interfaces
         void InsertRole(AppRole role);
         void InsertRoleGroups(List<RoleGroup> groupRoles);
         void DeleteRoleGroups(string roleId);
-
         void DeleteCustomerRoles(string roleId);
         List<RoleGroupModel> GetRoleGroups(string roleId);
         void InsertCustomerRoles(List<UserRole> customerRoles);
+        List<PermisionCustomerModel> checkAccessPermision(string customerId);
     }
 }

@@ -1,20 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Smart.Service.Interfaces;
+using Smart.Utility.StringHelper;
+using Smart.Website.Extensions;
 
 namespace Smart.Website.Controllers
 {
     public class BaseController : Controller
     {
         private readonly IServiceProvider _serviceProvider;
+        private readonly IAppRoleService _appRoleService;
+        //private readonly IHttpContextAccessor _httpContext;
         public BaseController(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                _appRoleService = scope.ServiceProvider.GetRequiredService<IAppRoleService>();
+                //_httpContext = scope.ServiceProvider.GetRequiredService<IHttpContextAccessor>();
+            }
+
         }
 
         //after into action
@@ -22,11 +34,12 @@ namespace Smart.Website.Controllers
         {
             var controller = context.RouteData.Values["Controller"].ToString().ToLower();
             var action = context.RouteData.Values["Action"].ToString().ToLower();
-            using (var scope = _serviceProvider.CreateScope())
+            var customerId = HttpContext.User.GetSpecificClaim(ClaimHelper.ID);
+            if (!string.IsNullOrWhiteSpace(customerId))
             {
-                var result = scope.ServiceProvider.GetRequiredService<IAppRoleService>();
-                var roles = result.GetRoles();
+                var permisions = _appRoleService.checkAccessPermision(customerId);
             }
+           
 
             //context.HttpContext.Response.Redirect("/dang-nhap.html");
 

@@ -16,17 +16,9 @@ namespace Smart.Website.Controllers
     public class BaseController : Controller
     {
         private readonly IServiceProvider _serviceProvider;
-        private readonly IAppRoleService _appRoleService;
-        //private readonly IHttpContextAccessor _httpContext;
         public BaseController(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            using (var scope = _serviceProvider.CreateScope())
-            {
-                _appRoleService = scope.ServiceProvider.GetRequiredService<IAppRoleService>();
-                //_httpContext = scope.ServiceProvider.GetRequiredService<IHttpContextAccessor>();
-            }
-
         }
 
         //after into action
@@ -35,6 +27,9 @@ namespace Smart.Website.Controllers
             var controller = context.RouteData.Values["Controller"].ToString().ToLower();
             var action = context.RouteData.Values["Action"].ToString().ToLower();
             var customerId = HttpContext.User.GetSpecificClaim(ClaimHelper.ID);
+            var scope = _serviceProvider.CreateScope();
+            var _appRoleService = scope.ServiceProvider.GetRequiredService<IAppRoleService>();
+            var _httpContext = scope.ServiceProvider.GetRequiredService<IHttpContextAccessor>();
             if (!string.IsNullOrWhiteSpace(customerId))
             {
                 var permisions = _appRoleService.checkAccessPermision(customerId);

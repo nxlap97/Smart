@@ -41,9 +41,13 @@
                         <td>@action.Name</td>
                         @foreach (var role in Model.RoleList)
                         {
-                            var check = Model.RoleGroups.Exists(x=> x.ControllerName.ToLower() == controller.Name.ToLower() 
+                            var check = false;
+                            if (Model.RoleGroups != null)
+                            {
+                                 check = Model.RoleGroups.Exists(x => x.ControllerName.ToLower() == controller.Name.ToLower()
                                                                         && x.ActionName.ToLower() == action.Name.ToLower()
                                                                         && (int)x.PermisionEnumId == int.Parse(role.Value));
+                            }
                             <td class="text-align-center">
                                 <label><input class="check-role check-role-action role-action-@role.Name.ToLower()-@indexOf" data-id="@indexOf" data-role="@role.Name.ToLower()" data-controller="@controller.Name" data-action="@action.Name" data-permision-id="@role.Value" type="checkbox" value="@role.Value" @(check ? "checked":"")></label>
                             </td>

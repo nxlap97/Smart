@@ -96,7 +96,7 @@ namespace Smart.Website.Areas.Admin.Controllers
                                 .Select(y => new SelectionModel() { Value = ((int)y).ToString(), Name = y.GetDescription() })
                                 .OrderBy(r => r.Value).ToList(),
                 ControllerList = controllerList,
-                RoleGroups = _roleService.GetRoleGroups(roleId).Select(x=> new RoleGroupViewModel() { 
+                RoleGroups = _roleService.GetRoleGroups(roleId)?.Select(x=> new RoleGroupViewModel() { 
                                     ActionName  = x.ActionName,
                                     ControllerName = x.ControllerName,
                                     Id =x.Id,

@@ -10,6 +10,6 @@ namespace Smart.Domain.Model
         public string CustomerId { get; set; }
         public string ActionName { get; set; }
         public string ControllerName { get; set; }
-        public PermisionType Type { get; set; }
+        public PermisionEnum Type { get; set; }
     }
 }

@@ -15,11 +15,14 @@ namespace Smart.Service.EF
     {
         private readonly IRepository<AppRole, string> _appRoleRepository;
         private readonly IRepository<RoleGroup, string> _roleGroupRepository;
+        private readonly IRepository<UserRole, string> _userRoleRepository;
         private readonly IReadOnlyRepository _readOnlyRepository;
         public AppRoleService(IRepository<AppRole, string> appRoleRepository, 
             IRepository<RoleGroup, string> roleGroupRepository,
-            IReadOnlyRepository readOnlyRepository)
+            IReadOnlyRepository readOnlyRepository,
+            IRepository<UserRole, string> userRoleRepository)
         {
+            _userRoleRepository = userRoleRepository;
             _appRoleRepository = appRoleRepository;
             _roleGroupRepository = roleGroupRepository;
             _readOnlyRepository = readOnlyRepository;
@@ -37,14 +40,19 @@ namespace Smart.Service.EF
             return model;
         }
 
-        public void insertRole(AppRole role)
+        public void InsertRole(AppRole role)
         {
             _appRoleRepository.Add(role);
         }
 
-        public void insertRoleGroups(List<RoleGroup> groupRoles)
+        public void InsertRoleGroups(List<RoleGroup> groupRoles)
         {
             _roleGroupRepository.AddRang(groupRoles);
+        }
+
+        public void InsertCustomerRoles(List<UserRole> customerRoles)
+        {
+            _userRoleRepository.AddRang(customerRoles);
         }
 
         public List<RoleGroupModel> GetRoleGroups(string roleId)
@@ -61,10 +69,24 @@ namespace Smart.Service.EF
             return model;
         }
 
-        public void deleteRoleGroups(string roleId)
+        public void DeleteRoleGroups(string roleId)
         {
             var roleGroups = GetRoleGroupSimple(roleId);
-            _roleGroupRepository.RemoveMultiple(roleGroups);
+            if (roleGroups.Count() > 0)
+                _roleGroupRepository.RemoveMultiple(roleGroups);
+        }
+
+        public List<UserRole> GetCustomerRoleSimple(string customerId)
+        {
+            var model = _userRoleRepository.FindAll(x => x.CustomerId == customerId).ToList();
+            return model;
+        }
+
+        public void DeleteCustomerRoles(string customerId)
+        {
+            var cusstomerRoles = GetCustomerRoleSimple(customerId);
+            if(cusstomerRoles.Count() > 0)
+                _userRoleRepository.RemoveMultiple(cusstomerRoles);
         }
     }
 }

@@ -30,7 +30,6 @@ namespace Smart.Data
         public DbSet<Product> Products { set; get; }
         public DbSet<Subject> Subjects { set; get; }
         public DbSet<BlogCategory> BlogCategories { set; get; }
-        public DbSet<CustomerRole> CustomerRoles { set; get; }
         public DbSet<ProductCategory> ProductCategories { set; get; }
         public DbSet<Customer> Customers { set; get; }
         public DbSet<Employer> Employers { set; get; }

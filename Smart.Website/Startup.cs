@@ -41,6 +41,7 @@ namespace Smart.Website
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<ICustomerService, CustomerService>();
             services.AddTransient<IAppRoleService, AppRoleService>();
+           
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IViewEnginerService, ViewEnginerService>();

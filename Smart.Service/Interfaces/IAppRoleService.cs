@@ -10,9 +10,12 @@ namespace Smart.Service.Interfaces
     {
         List<AppRole> GetRoles();
         List<UserRole> GetUserRoles(string customerId);
-        void insertRole(AppRole role);
-        void insertRoleGroups(List<RoleGroup> groupRoles);
-        void deleteRoleGroups(string roleId);
+        void InsertRole(AppRole role);
+        void InsertRoleGroups(List<RoleGroup> groupRoles);
+        void DeleteRoleGroups(string roleId);
+
+        void DeleteCustomerRoles(string roleId);
         List<RoleGroupModel> GetRoleGroups(string roleId);
+        void InsertCustomerRoles(List<UserRole> customerRoles);
     }
 }

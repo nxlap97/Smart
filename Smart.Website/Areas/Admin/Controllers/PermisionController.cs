@@ -127,9 +127,9 @@ namespace Smart.Website.Areas.Admin.Controllers
             });
 
             if(!string.IsNullOrWhiteSpace(roleId))
-                _roleService.deleteRoleGroups(roleId);
+                _roleService.DeleteRoleGroups(roleId);
 
-            _roleService.insertRoleGroups(lstRole);
+            _roleService.InsertRoleGroups(lstRole);
             return Json(new { status = true, message = "" });
         }
 
@@ -147,28 +147,14 @@ namespace Smart.Website.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateCustomerRole(string JsonPost)
+        public IActionResult UpdateCustomerRole(string JsonPost, string customerId)
         {
-            var model = JsonConvert.DeserializeObject<List<RoleGroupViewModel>>(JsonPost);
-            var lstRole = new List<RoleGroup>();
-            var roleId = "";
-            model.ForEach(x =>
-            {
-                var roleGroup = new RoleGroup()
-                {
-                    ActionName = x.ActionName,
-                    ControllerName = x.ControllerName,
-                    RoleId = x.Id,
-                    Type = x.PermisionEnumId,
-                };
-                lstRole.Add(roleGroup);
-                roleId = x.Id;
-            });
+            var model = JsonConvert.DeserializeObject<List<UserRole>>(JsonPost);
 
-            if (!string.IsNullOrWhiteSpace(roleId))
-                _roleService.deleteRoleGroups(roleId);
+            if (!string.IsNullOrWhiteSpace(customerId))
+                _roleService.DeleteCustomerRoles(customerId);
 
-            _roleService.insertRoleGroups(lstRole);
+            _roleService.InsertCustomerRoles(model);
             return Json(new { status = true, message = "" });
         }
     }

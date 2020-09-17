@@ -4,7 +4,7 @@
 }
 <div class="col-md-12">
     <div>
-        <input type="hidden" id="customer-id" value="" />
+        <input type="hidden" id="customer-id" value="@Model.CustomerId" />
     </div>
     <table class="table">
         <thead>
@@ -68,8 +68,8 @@
 
             $.ajax({
                 type: "POST",
-                url: '/Admin/Permision/UpdateRolePermision',
-                data: { JsonPost: JSON.stringify(lstData) },
+                url: '/Admin/Permision/UpdateCustomerRole',
+                data: { JsonPost: JSON.stringify(lstData), customerId: $("#customer-id").val() },
                 success: function (result) {
                     MessageNotify("SAVE", "Save data success", "success");
                     $('#popup-modal-common .close-modal').click();
